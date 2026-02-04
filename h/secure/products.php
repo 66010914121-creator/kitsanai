@@ -1,186 +1,132 @@
 <?php
 include_once("check_login.php");
 ?>
-
 <!doctype html>
 <html lang="th">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>จัดการสินค้า - สรอัฐ น้ำใส</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
-
+    <title>จัดการสินค้า admin - กฤษนัย สรพิมพ์</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --pink-main: #f06292;
+            --pink-light: #fce4ec;
+            --pink-dark: #ad1457;
+        }
         body {
-            font-family: 'Prompt', sans-serif;
             background-color: #f8f9fa;
         }
-
-        /* Navbar โทนชมพู */
-        .navbar-custom {
-            background: linear-gradient(to right, #ec008c, #fc6767);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        .navbar {
+            background-color: var(--pink-main) !important;
         }
-        
-        .navbar-brand { font-weight: 600; color: white !important; }
-        .nav-link { color: rgba(255,255,255,0.8) !important; transition: 0.3s; }
-        .nav-link:hover, .nav-link.active { color: white !important; font-weight: 500; }
-        
-        /* Card ตาราง */
-        .card-table {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            overflow: hidden;
+        .sidebar {
+            background-color: white;
+            min-height: calc(100vh - 56px);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
         }
-
-        .table-header-custom {
-            background-color: #fff0f5;
-            color: #d63384;
-            font-weight: 600;
+        .nav-link {
+            color: #555;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin: 5px 10px;
         }
-
-        /* ปุ่ม Action */
-        .btn-edit { background-color: #ffc107; border: none; color: #000; }
-        .btn-edit:hover { background-color: #ffca2c; }
-        
-        .btn-delete { background-color: #dc3545; border: none; color: white; }
-        .btn-delete:hover { background-color: #bb2d3b; }
-
-        .btn-add-new {
-            background: linear-gradient(45deg, #11998e, #38ef7d); /* สีเขียวสดใส */
-            border: none;
-            color: white;
-            box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
-            transition: all 0.3s;
+        .nav-link:hover {
+            background-color: var(--pink-light);
+            color: var(--pink-dark);
         }
-        .btn-add-new:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(56, 239, 125, 0.6);
+        .nav-link.active {
+            background-color: var(--pink-main);
+            color: white !important;
+        }
+        .table-pink thead {
+            background-color: var(--pink-main);
             color: white;
         }
-
-        /* รูปสินค้า */
         .product-img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             object-fit: cover;
             border-radius: 8px;
-            border: 1px solid #eee;
+            border: 1px solid var(--pink-light);
         }
     </style>
 </head>
-
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.php"><i class="bi bi-gem me-2"></i>สรอัฐ น้ำใส</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index2.php">หน้าหลัก</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="products.php">จัดการสินค้า</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="orders.php">จัดการออเดอร์</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="customers.php">จัดการลูกค้า</a>
-                    </li>
-                </ul>
-                <div class="d-flex text-white align-items-center">
-                    <span class="me-3"><i class="bi bi-person-circle"></i> <?php echo $_SESSION['aname']; ?></span>
-                    <a href="logout.php" class="btn btn-sm btn-light text-pink rounded-pill fw-bold" style="color: #ec008c;">ออกจากระบบ</a>
-                </div>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">
+            <i class="fa-solid fa-boxes-stacked me-2"></i> กฤษนัย สรพิมพ์ (ไกด์)
+        </a>
+        <div class="ms-auto d-flex align-items-center">
+            <span class="text-white me-3 d-none d-sm-inline">
+                แอดมิน: <strong><?php echo htmlspecialchars($_SESSION['aname']); ?></strong>
+            </span>
+            <a href="logout.php" class="btn btn-sm btn-outline-light">ออกจากระบบ</a>
         </div>
-    </nav>
-
-    <div class="container mt-5">
-        
-        <div class="row align-items-center mb-4">
-            <div class="col-md-6">
-                <h2 class="fw-bold text-secondary"><i class="bi bi-box-seam me-2"></i>รายการสินค้าทั้งหมด</h2>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <a href="product_form.php" class="btn btn-add-new rounded-pill px-4 py-2 fw-bold">
-                    <i class="bi bi-plus-lg me-1"></i> เพิ่มสินค้าใหม่
-                </a>
-            </div>
-        </div>
-
-        <div class="card card-table">
-            <div class="card-body p-0">
-                
-                <div class="p-3 bg-light border-bottom">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="ค้นหาชื่อสินค้า..." style="max-width: 300px;">
-                        <button class="btn btn-outline-secondary" type="submit">ค้นหา</button>
-                    </form>
-                </div>
-
-                <table class="table table-hover mb-0 align-middle">
-                    <thead class="table-header-custom">
-                        <tr>
-                            <th scope="col" class="ps-4">รูปภาพ</th>
-                            <th scope="col">ชื่อสินค้า</th>
-                            <th scope="col">หมวดหมู่</th>
-                            <th scope="col">ราคา</th>
-                            <th scope="col" class="text-center">คงเหลือ</th>
-                            <th scope="col" class="text-center">จัดการ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            // Mock Data สมมติ
-                            $mock_products = [
-                                ['id'=>1, 'name'=>'ครีมหน้าใส สูตร 1', 'cate'=>'สกินแคร์', 'price'=>'590', 'stock'=>120, 'img'=>'https://via.placeholder.com/50'],
-                                ['id'=>2, 'name'=>'เซรั่มวิตามินซี', 'cate'=>'สกินแคร์', 'price'=>'890', 'stock'=>45, 'img'=>'https://via.placeholder.com/50'],
-                                ['id'=>3, 'name'=>'สบู่สมุนไพร', 'cate'=>'ทำความสะอาด', 'price'=>'120', 'stock'=>5, 'img'=>'https://via.placeholder.com/50'],
-                            ];
-
-                            foreach($mock_products as $p) {
-                        ?>
-                        <tr>
-                            <td class="ps-4">
-                                <img src="<?php echo $p['img']; ?>" alt="Product" class="product-img">
-                            </td>
-                            <td class="fw-bold text-dark"><?php echo $p['name']; ?></td>
-                            <td class="text-muted small"><?php echo $p['cate']; ?></td>
-                            <td class="text-pink fw-bold" style="color: #ec008c;">฿<?php echo $p['price']; ?></td>
-                            <td class="text-center">
-                                <?php if($p['stock'] < 10) { ?>
-                                    <span class="badge bg-danger rounded-pill">เหลือ <?php echo $p['stock']; ?></span>
-                                <?php } else { ?>
-                                    <span class="badge bg-success rounded-pill"><?php echo $p['stock']; ?></span>
-                                <?php } ?>
-                            </td>
-                            <td class="text-center">
-                                <a href="product_edit.php?id=<?php echo $p['id']; ?>" class="btn btn-sm btn-edit rounded px-2" title="แก้ไข">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a href="product_delete.php?id=<?php echo $p['id']; ?>" class="btn btn-sm btn-delete rounded px-2" onclick="return confirm('ยืนยันการลบสินค้านี้?');" title="ลบ">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <?php } // จบ Loop ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
     </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0 pt-3">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="index2.php"><i class="fa-solid fa-house me-2"></i> หน้าหลัก</a></li>
+                <li class="nav-item"><a class="nav-link active" href="products.php"><i class="fa-solid fa-box me-2"></i> จัดการสินค้า</a></li>
+                <li class="nav-item"><a class="nav-link" href="orders.php"><i class="fa-solid fa-cart-shopping me-2"></i> จัดการออเดอร์</a></li>
+                <li class="nav-item"><a class="nav-link" href="customers.php"><i class="fa-solid fa-users me-2"></i> จัดการลูกค้า</a></li>
+                <hr class="mx-3">
+                <li class="nav-item"><a class="nav-link text-danger" href="logout.php"><i class="fa-solid fa-right-from-bracket me-2"></i> ออกจากระบบ</a></li>
+            </ul>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold" style="color: var(--pink-dark);">รายการสินค้าในคลัง</h2>
+                <button class="btn btn-pink shadow-sm text-white" style="background-color: var(--pink-main);">
+                    <i class="fa-solid fa-plus-circle me-1"></i> เพิ่มสินค้าใหม่
+                </button>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 table-pink">
+                            <thead>
+                                <tr>
+                                    <th class="py-3 px-4">รูปภาพ</th>
+                                    <th class="py-3">ชื่อสินค้า</th>
+                                    <th class="py-3">หมวดหมู่</th>
+                                    <th class="py-3 text-end">ราคา</th>
+                                    <th class="py-3 text-center">สต็อก</th>
+                                    <th class="py-3 text-center">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4">
+                                        <img src="https://via.placeholder.com/60" alt="Product" class="product-img">
+                                    </td>
+                                    <td><span class="fw-bold">กลูต้าพิงค์กี้ไวท์</span></td>
+                                    <td>อาหารเสริม</td>
+                                    <td class="text-end">350.00 ฿</td>
+                                    <td class="text-center"><span class="badge bg-success rounded-pill">120 ชิ้น</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-outline-primary border-0"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button class="btn btn-sm btn-outline-danger border-0"><i class="fa-solid fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
