@@ -25,7 +25,7 @@ if(isset($_POST['Submit'])) {
 $sql = "SELECT * FROM regions";
 $rs = mysqli_query($conn, $sql);
 ?>
-
+    
 <table border="1">
     <tr>
         <th>รหัสภาค</th>
