@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Bangkok');
 
 $host = "localhost";
 $user = "root";     // ผู้ใช้งานฐานข้อมูล (XAMPP คือ root)
-$pass = "";         // รหัสผ่าน (XAMPP ปกติจะว่างไว้)
+$pass = "12345gg";         // รหัสผ่าน (XAMPP ปกติจะว่างไว้)
 $dbname = "clothing_db"; // ตรวจสอบให้มั่นใจว่าชื่อฐานข้อมูลใน phpMyAdmin ตรงกัน
 
 // เชื่อมต่อฐานข้อมูล
