@@ -8,13 +8,19 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// ฟังก์ชันช่วย: ตรวจสอบว่า image เป็น URL หรือชื่อไฟล์
+function getImageSrc($image) {
+    if (empty($image)) return 'https://via.placeholder.com/600x800?text=No+Image';
+    if (str_starts_with($image, 'http')) return $image;
+    return 'img/' . $image;
+}
+
 // 2. ระบบค้นหาสินค้า (Search Logic)
 $search = "";
 if (isset($_GET['search'])) {
     $search = mysqli_real_escape_string($conn, $_GET['search']);
     $sql = "SELECT * FROM products WHERE name LIKE '%$search%' ORDER BY id DESC";
 } else {
-    // แก้ไข: ลบคำว่า AS ออกจากหน้า SELECT
     $sql = "SELECT * FROM products ORDER BY id DESC";
 }
 
@@ -120,12 +126,12 @@ $query = mysqli_query($conn, $sql);
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="card h-100 product-card shadow-sm border-0">
                         <div class="position-relative">
-                            <img src="img/<?php echo !empty($product['image']) ? $product['image'] : 'no-image.jpg'; ?>" 
-                                 class="card-img-top" alt="<?php echo $product['name']; ?>"
-                                 onerror="this.src='https://via.placeholder.com/300x400?text=No+Image'">
+                            <img src="<?php echo getImageSrc($product['image']); ?>" 
+                                 class="card-img-top" alt="<?php echo htmlspecialchars($product['name']); ?>"
+                                 onerror="this.src='https://via.placeholder.com/600x800?text=No+Image'">
                         </div>
                         <div class="card-body d-flex flex-column text-center">
-                            <h6 class="card-title fw-bold text-dark mb-2"><?php echo $product['name']; ?></h6>
+                            <h6 class="card-title fw-bold text-dark mb-2"><?php echo htmlspecialchars($product['name']); ?></h6>
                             <p class="text-primary fw-bold fs-5 mb-3">฿<?php echo number_format($product['price'], 2); ?></p>
                             <div class="mt-auto d-grid gap-2">
                                 <a href="cart_process.php?add=<?php echo $product['id']; ?>" class="btn btn-dark rounded-pill">

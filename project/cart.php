@@ -7,6 +7,13 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: index.php"); 
     exit(); 
 }
+
+// ฟังก์ชันช่วย: ตรวจสอบว่า image เป็น URL หรือชื่อไฟล์
+function getImageSrc($image) {
+    if (empty($image)) return 'https://via.placeholder.com/60x60?text=?';
+    if (str_starts_with($image, 'http')) return $image;
+    return 'img/' . $image;
+}
 ?>
 
 <!DOCTYPE html>
@@ -61,9 +68,12 @@ if (!isset($_SESSION['user_id'])) {
                     <tr>
                         <td class="ps-4">
                             <div class="d-flex align-items-center gap-3">
-                                <img src="img/<?php echo $row['image']; ?>" class="product-img border" alt="product">
+                                <img src="<?php echo getImageSrc($row['image']); ?>" 
+                                     class="product-img border" 
+                                     alt="<?php echo htmlspecialchars($row['name']); ?>"
+                                     onerror="this.src='https://via.placeholder.com/60x60?text=?'">
                                 <div>
-                                    <div class="fw-bold text-dark"><?php echo $row['name']; ?></div>
+                                    <div class="fw-bold text-dark"><?php echo htmlspecialchars($row['name']); ?></div>
                                     <small class="text-muted">ID: #<?php echo $row['id']; ?></small>
                                 </div>
                             </div>
