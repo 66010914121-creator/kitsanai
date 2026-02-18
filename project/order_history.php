@@ -90,7 +90,6 @@ $query = mysqli_query($conn, $sql);
                         </td>
                         <td>
                             <?php 
-                            // แสดงสถานะพร้อมตกแต่งสี
                             switch($order['status']) {
                                 case 'Pending':
                                     echo '<span class="status-badge bg-warning-subtle text-warning-emphasis"><i class="bi bi-hourglass-split"></i> รอการตรวจสอบ</span>';
@@ -110,9 +109,9 @@ $query = mysqli_query($conn, $sql);
                             ?>
                         </td>
                         <td class="text-center pe-4">
-                            <button class="btn btn-sm btn-light border rounded-pill px-3">
+                            <a href="order_detail.php?id=<?php echo $order['id']; ?>" class="btn btn-sm btn-light border rounded-pill px-3">
                                 ดูรายการ <i class="bi bi-chevron-right ms-1"></i>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     <?php } ?>
