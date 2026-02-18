@@ -29,11 +29,11 @@
 
     <h1>งาน K-66010914121 กฤษนัย สรพิมพ์ (ไกด์)</h1>
 
-    <button class="btn-green" onclick="window.open('my-photo.jpg', '_blank')">
+    <button class="btn-green" onclick="window.open('1.jpg', '_blank')">
         เปิดรูปตัวเอง
     </button>
 
-    <button class="btn-orange" onclick="window.open('teacher-photo.jpg', '_blank')">
+    <button class="btn-orange" onclick="window.open('2.jpg', '_blank')">
         เปิดรูปอาจารย์ผู้สอน
     </button>
 
